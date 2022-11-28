@@ -14,43 +14,60 @@
         <div class="form-section">
           <div class="header">
             <p>
-              This is not a real online service! You know you need something like this in your life to help you realize your deepest dreams. Sign up
+              This is not a real online service! You know you need something like this in your life
+              to help you realize your deepest dreams. Sign up
               <em>now</em> to get started.
             </p>
           </div>
           <div class="input-section">
-            <form id="my-form" onsubmit="return false">
+            <form id="my-form" onsubmit="return submitForm">
               <label for=""
                 >First Name
-                <input type="text" id="firstname" name="firstname" required />
+                <input type="text" id="firstname" name="firstname" required autocomplete="off" />
+                <!-- <div class="error error-firstname"></div> -->
               </label>
               <label for=""
                 >Last Name
-                <input type="text" id="lastname" name="lastname" required />
+                <input type="text" id="lastname" name="lastname" required autocomplete="off" />
+                <!-- <div class="error error-lastname"></div> -->
               </label>
               <label for=""
                 >Email
                 <input type="email" id="email" name="email" required autocomplete="off" />
+                <div class="error error-email"></div>
               </label>
               <label for=""
                 >Phone Number
-                <input type="tel" id="phonenumber" name="phonenumber" required pattern="[0-9]{11}" />
+                <input
+                  type="tel"
+                  id="phonenumber"
+                  name="phonenumber"
+                  required
+                  autocomplete="off"
+                  pattern="[0-9]{11}" />
                 <div class="error error-phone"></div>
               </label>
               <label for=""
                 >Password
-                <input type="password" id="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  autocomplete="off"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+                <div class="error error-password"></div>
               </label>
               <label for=""
                 >Confirm Password
-                <input type="password" id="passwordConfirm" name="passwordConfirm" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
-                <div class="error error-passwordConfirm"></div>
+                <input type="password" id="passwordConfirm" name="passwordConfirm" required />
+                <div class="error-passwordConfirm"></div>
               </label>
             </form>
           </div>
           <div class="container-submit-section">
+            <div class="error error-all" style="font-weight: bold; font-size: 17px"></div>
             <button id="button-signup" type="submit" form="my-form">Sign Up</button>
-            <div class="error error-all" style="font-weight: bold"></div>
             <p style="font-size: 15px; margin-left: 20px">
               Already have an account?
               <a href="" style="font-size: 15px">Log in</a>
@@ -60,69 +77,6 @@
       </div>
       <img id="img-sign-up" src="img/sign-up.png" alt="Image failed to load" />
     </main>
-    <script>
-      buttonSignUp = document.querySelector('#button-signup');
-      inputs = document.querySelectorAll('input');
-
-      phone = document.querySelector('#phonenumber');
-      password = document.querySelector('#password');
-      passwordConfirm = document.querySelector('#passwordConfirm');
-
-      errorPasswordConfirm = document.querySelector('.error-passwordConfirm');
-      errorPhone = document.querySelector('.error-phone');
-      errorAll = document.querySelector('.error-all');
-
-      //If submit was pressed with missing fields
-      buttonSignUp.onclick = function () {
-        errorCount = 0;
-        for (items of inputs) {
-          if (items.value === '') {
-            items.classList.add('border-red');
-            errorCount++;
-          }
-        }
-        if (errorCount > 0) {
-          errorAll.textContent = 'Please fill out all required fields.';
-        }
-      };
-      arrAll = ['phonenumber', 'password'];
-      arrError = ['Please enter in a 10 digit phone number', 'password'];
-
-      //Border red when pattern or type mismatched
-      document.getElementById('my-form').addEventListener('change', function (e) {
-        if (e.target.validity.patternMismatch || e.target.validity.typeMismatch) {
-          const errorIndex = arrAll.indexOf(e.target.id);
-          testt = document.getElementById('my-form').querySelectorAll('.error');
-          testt[errorIndex].textContent = arrError[errorIndex];
-          e.target.classList.add('border-red');
-        } else {
-          e.target.classList.remove('border-red');
-        }
-      });
-
-      // phone.onchange = function (e) {
-      //   if (e.target.validity.patternMismatch || e.target.validity.typeMismatch) {
-      //     //errorPhone.textContent = 'hakdog';
-      //   }
-
-      // };
-
-      passwordConfirm.onchange = passwordConfirmValidation;
-      password.onchange = passwordConfirmValidation;
-
-      //password and confirmation validation
-      function passwordConfirmValidation() {
-        if (passwordConfirm.value === '' || password.value === '') return;
-        if (passwordConfirm.value !== password.value) {
-          passwordConfirm.classList.add('border-red');
-          password.classList.add('border-red');
-          errorPasswordConfirm.textContent = 'Password should match. Try again.';
-        } else {
-          passwordConfirm.classList.remove('border-red');
-          password.classList.remove('border-red');
-          errorPasswordConfirm.textContent = '';
-        }
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
